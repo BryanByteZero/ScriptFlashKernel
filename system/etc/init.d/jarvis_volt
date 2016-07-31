@@ -1,0 +1,3 @@
+#!/system/bin/sh
+# undervolt script
+echo -60mV > /proc/sys/bacem/volt/cpu

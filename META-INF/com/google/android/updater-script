@@ -1,0 +1,30 @@
+#Check if phone is ok
+ui_print("Checking phone...");
+assert(getprop("ro.product.device") == "GT-S5360" || getprop("ro.build.product") == "GT-S5360" ||
+getprop("ro.product.device") == "GT-S5360B" || getprop("ro.build.product") == "GT-S5360B");
+ui_print("Ok");
+#Instaling
+ui_print("Instaling ZERO Kernel");
+ui_print("By BryanByteZ for SGY");
+ui_print("AKA as GT-S5360 and");
+ui_print("Samsung Galaxy Y");
+mount("rfs", "EMMC", "/dev/block/stl9", "/system");
+show_progress(0.100000, 0);
+#Copying files in ramdisk
+package_extract_file("bmlunlock", "bmlunlock");
+package_extract_file("boot.img", "boot.img");
+set_perm(0, 0, 0755, "bmlunlock");
+#Mounting the sdcard
+mount("vfat", "/dev/block/mmcblk0p1", "/sdcard", "rw");
+ui_print("50%...");
+#Flashing and UI
+run_program("bmlunlock");
+run_program("/system/bin/dd", "if=boot.img", "of=/dev/block/bml7");	 
+show_progress(0.2, 10);
+show_progress(0.100000, 0);
+ui_print("100%...!");
+ui_print("Done !");
+ui_print("Check XDA Thread for info and changelog");
+ui_print("Thank you!");
+unmount("/system");
+ui_print("You can reboot now!");
