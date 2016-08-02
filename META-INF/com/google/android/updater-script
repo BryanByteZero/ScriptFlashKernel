@@ -11,15 +11,22 @@ ui_print("Samsung Galaxy Y");
 mount("rfs", "EMMC", "/dev/block/stl9", "/system");
 show_progress(0.100000, 0);
 #Copying files in ramdisk
-package_extract_file("bmlunlock", "bmlunlock");
-package_extract_file("boot.img", "boot.img");
-set_perm(0, 0, 0755, "bmlunlock");
+ui_print("Extracting kernel files and drivers...");
+package_extract_dir("kernel", "/tmp");
+set_perm(0, 0, 0777, "/tmp/busybox");
+set_perm(0, 0, 0777, "/tmp/repack-ramdisk.sh");
+set_perm(0, 0, 0777, "/tmp/mkbootimg.sh");
+set_perm(0, 0, 0777, "/tmp/mkbootimg");
+set_perm(0, 0, 0777, "/tmp/unpackbootimg");
+run_program("/tmp/busybox", "dd", "if=/dev/block/bml7", "of=/tmp/boot.img");
+run_program("/tmp/unpackbootimg", "-i", "/tmp/boot.img", "-o", "/tmp/");
+run_program("/tmp/repack-ramdisk.sh");
+run_program("/tmp/mkbootimg.sh");
+run_program("/tmp/busybox", "dd", "if=/tmp/newboot.img", "of=/dev/block/bml7");
 #Mounting the sdcard
-mount("vfat", "/dev/block/mmcblk0p1", "/sdcard", "rw");
+#mount("vfat", "/dev/block/mmcblk0p1", "/sdcard", "rw");
 ui_print("50%...");
 #Flashing and UI
-run_program("bmlunlock");
-run_program("/system/bin/dd", "if=boot.img", "of=/dev/block/bml7");	 
 show_progress(0.2, 10);
 show_progress(0.100000, 0);
 ui_print("100%...!");
