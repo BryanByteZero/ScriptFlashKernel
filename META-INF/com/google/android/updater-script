@@ -2,12 +2,14 @@
 ui_print("Checking phone...");
 assert(getprop("ro.product.device") == "GT-S5360" || getprop("ro.build.product") == "GT-S5360" ||
 getprop("ro.product.device") == "GT-S5360B" || getprop("ro.build.product") == "GT-S5360B");
-ui_print("Ok");
+ui_print("Ok!");
 #Instaling
-ui_print("Instaling ZERO Kernel");
+ui_print("Instaling ZERO Byte Kernel");
 ui_print("By BryanByteZ for SGY");
 ui_print("AKA as GT-S5360 and");
 ui_print("Samsung Galaxy Y");
+ui_print("For Cyanogenmod 7.2");
+ui_print("and based's");
 mount("rfs", "EMMC", "/dev/block/stl9", "/system");
 show_progress(0.100000, 0);
 #Copying files in ramdisk
